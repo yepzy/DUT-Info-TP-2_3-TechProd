@@ -126,4 +126,4 @@ def writeTableEquipements(numero, nom):
     c.close()
 """
 
-readCSV()
+readCSV("equipements.csv")
