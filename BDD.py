@@ -6,7 +6,7 @@ import json
 # et les mettres dans la base de données
 
 
-def readCSV(filename):
+def readCSV(filename, tablename):
     # with open('CSV/activités.csv') as csvfile:
     # 	reader = csv.DictReader(csvfile)
     # 	cpt = 0
@@ -20,7 +20,7 @@ def readCSV(filename):
         for row in reader:
             cpt = cpt + 1
             print(str(cpt) + " | " + row['EquipementId'] + " " + row['EquNom'])
-            writeTableEquipements(row['EquipementId'], row['EquNom'])
+            writeTable(tablename, row['EquipementId']+ row['EquNom'])
 
 def readJSON(filename):
     with open('JSON/'+filename) as data_file:
