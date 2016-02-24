@@ -6,7 +6,7 @@ import json
 # et les mettres dans la base de données
 
 
-def readCSV():
+def readCSV(filename):
     # with open('CSV/activités.csv') as csvfile:
     # 	reader = csv.DictReader(csvfile)
     # 	cpt = 0
@@ -14,7 +14,7 @@ def readCSV():
     # 		cpt = cpt + 1
     # 		print(str(cpt)+" | "+row['EquipementId']+" "+row['ActLib'])
     # 		writeTableActivites(row['EquipementId'],row['ActLib'])
-    with open('CSV/equipements.csv') as csvfile:
+    with open('CSV/'+filename) as csvfile:
         reader = csv.DictReader(csvfile)
         cpt = 0
         for row in reader:
@@ -22,14 +22,35 @@ def readCSV():
             print(str(cpt) + " | " + row['EquipementId'] + " " + row['EquNom'])
             writeTableEquipements(row['EquipementId'], row['EquNom'])
 
-
-def readJSON():
-    with open('JSON/installations.json') as data_file:
+def readJSON(filename):
+    with open('JSON/'+filename) as data_file:
         data = json.load(data_file)
         for row in data:
             print(row)
 
+def createTable(tablename, attributes):
+    conn = sqlite3.connect('DB/data.db')
+    c = conn.cursor()
+    if not c.execute('SELECT * FROM '+tablename):
+        c.execute('CREATE TABLE '+tablename+' ('+attributes+')')
+    # Sauvegarder les modifications
+    conn.commit()
+    # Fermer le curseur
+    c.close()
 
+def writeTable(tablename, values):
+    conn = sqlite3.connect('DB/data.db')
+    c = conn.cursor()
+    try:
+        c.execute('SELECT * FROM '+tablename)
+    except sqlite3.Error as e:
+        print e.args[0]
+    c.execute('INSERT INTO '+tablename+' VALUES ('+values+');')
+    # Sauvegarder les modifications
+    conn.commit()
+    # Fermer le curseur
+    c.close()
+"""
 def createTableIntallations():
     conn = sqlite3.connect('DB/data.db')
     c = conn.cursor()
@@ -103,6 +124,6 @@ def writeTableEquipements(numero, nom):
     conn.commit()
     # Fermer le curseur
     c.close()
-
+"""
 
 readCSV()
