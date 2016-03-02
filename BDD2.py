@@ -18,11 +18,12 @@ def readCSV(filepath, tablename, columns):
                 values.append('\''+row[column]+'\'')
             allvalues.append(values)
             #print(str(cpt) + str(values))
-        writeTable(filepath, tablename, allvalues)
+        writeTable("BD/data.db", tablename, allvalues)
 
 def readJSON(filepath, tablename, columns):
     with open(filepath, encoding="utf-8") as data_file:
         data = json.loads(data_file.read())
+        data = data["data"]
         cpt = 0
         allvalues = []
         for row in data:
@@ -34,13 +35,15 @@ def readJSON(filepath, tablename, columns):
                 else:
                     values.append(convertOuiNonBool(row[column]))
             allvalues.append(values)
-        writeTable(filepath, tablename, allvalues)
+        writeTable("DB/data.db", tablename, allvalues)
 
 def createTable(filepath, tablename, attributes):
     conn = sqlite3.connect(filepath)
     c = conn.cursor()
-    if not c.execute('SELECT * FROM '+tablename):
-        c.execute('CREATE TABLE '+tablename+' ('+attributes+')')
+    try:
+        c.execute('SELECT * FROM '+tablename+';')
+    except sqlite3.Error as e:
+        c.execute('CREATE TABLE '+tablename+' ('+','.join([str(x) for x in attributes])+');')
     # Sauvegarder les modifications
     conn.commit()
     # Fermer le curseur
@@ -50,13 +53,13 @@ def writeTable(filepath, tablename, values):
     conn = sqlite3.connect(filepath)
     c = conn.cursor()
     try:
-        c.execute('SELECT * FROM '+tablename)
+        c.execute('SELECT * FROM '+tablename+';')
     except sqlite3.Error as e:
         print (e.args[0])
     string = "?"
     for _ in range(1, len(values[0])):
         string += ',?'
-    str2 = 'INSERT INTO '+tablename+' VALUES ('+string+')'
+    str2 = 'INSERT INTO '+tablename+' VALUES ('+string+');'
     print(str2)
     c.executemany(str2, values)
     # Sauvegarder les modifications
@@ -72,4 +75,5 @@ def convertOuiNonBool(data):
     return data
 
 #readCSV("CSV/equipements.csv", "equipements", {'EquipementId', 'EquNom'})
+createTable("DB/data.db", "installations", {'EquipementId NUMBER primary key', 'EquActiviteSalleSpe NUMBER', 'EquActivitePratique NUMBER', 'EquActivitePraticable NUMBER', 'ComLib TEXT', 'ActCode NUMBER', 'ActNivLib TEXT', 'ComInsee NUMBER', 'ActLib TEXT', 'EquNbEquIdentique NUMBER'})
 readJSON("JSON/installations.json", "installations", {'EquipementId', 'EquActiviteSalleSpe', 'EquActivitePratique', 'EquActivitePraticable', 'ComLib', 'ActCode', 'ActNivLib', 'ComInsee', 'ActLib', 'EquNbEquIdentique'})
