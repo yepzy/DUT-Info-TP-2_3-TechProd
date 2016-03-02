@@ -70,47 +70,21 @@ def writeTable(filepath, tablename, values):
     # Fermer le curseur
     c.close()
 
-#readCSV("CSV/equipements.csv", "equipements", {'EquipementId', 'EquNom'})
-createTable("DB/data.db", "installations",
-    {
-		"InsLieuDit TEXT",
-		"Latitude REAL",
-        "Longitude REAL",
-		"geo BLOB",
-		"InsNumeroInstall NUMBER",
-		"InsCodePostal NUMBER",
-		"ComLib TEXT",
-		"InsLibelleVoie TEXT"		
-    })
+def convertOuiNonBool(data):
+    if(data == "Oui"):
+        return True
+    if(data == "Non"):
+        return False
+    return data
 
-createTable("DB/data.db","activites",
-    {
-    "ComInsee NUMBER",
-    "ComLib TEXT",
-    "EquipementId NUMBER",
-    "EquNbEquIdentique NUMBER",
-    "ActCode NUMBER",
-    "ActLib TEXT",
-    "EquActivitePraticable NUMBER",
-    "EquActivitePratique NUMBER",
-    "EquActiviteSalleSpe NUMBER",
-    "ActNivLib TEXT"
-    })
+#readCSV("CSV/equipements.csv", "equipements", ['EquipementId', 'EquNom'])
+createTable("DB/data.db","installations", [ "InsLieuDit TEXT",  "Latitude REAL", "Longitude REAL",  "geo BLOB", "InsNumeroInstall NUMBER",  "InsCodePostal NUMBER", "ComLib TEXT",  "InsLibelleVoie TEXT" ])
 
-createTable("DB/data.db","equipements",
-{
-    "InsNumeroInstall NUMBER",
-    "EquipementId NUMBER",
-    "EquNom TEXT",
-    "EquNomBatiment TEXT",
-    "EquipementTypeLib TEXT",
-    "EquipementFiche TEXT",
-    "FamilleFicheLib TEXT",
-    "EquGpsX NUMBER",
-    "EquGpsY NUMBER",
-    "EquDateMa TEXT"
-})
+createTable("DB/data.db","activites", [ "EquipementId NUMBER", "ActCode NUMBER", "ActLib TEXT", "EquActivitePraticable NUMBER", "EquActivitePratique NUMBER", "EquActiviteSalleSpe NUMBER" ])
+
+createTable("DB/data.db","equipements",[ "InsNumeroInstall NUMBER", "EquipementId NUMBER", "EquNom TEXT", "EquNomBatiment TEXT", "EquipementTypeLib TEXT", "EquipementFiche TEXT", "FamilleFicheLib TEXT", "EquGpsX REAL", "EquGpsY REAL", "EquDateMa TEXT"])
 
 
-readJSON("JSON/installations.json", "installations", {'EquipementId', 'EquActiviteSalleSpe', 'EquActivitePratique', 'EquActivitePraticable', 'ComLib', 'ActCode', 'ActNivLib', 'ComInsee', 'ActLib', 'EquNbEquIdentique'})
-readCSV('CSV/equipements.csv')
+readJSON("JSON/installations.json", "installations",  [ "InsLieuDit",  "Latitude", "Longitude",  "geo", "InsNumeroInstall",  "InsCodePostal", "ComLib",  "InsLibelleVoie" ])
+readCSV('CSV/equipements.csv',"equipements",[ "InsNumeroInstall", "EquipementId", "EquNom", "EquNomBatiment", "EquipementTypeLib", "EquipementFiche", "FamilleFicheLib", "EquGpsX", "EquGpsY", "EquDateMa"])
+readCSV('CSV/activités.csv','activites',[ "EquipementId", "ActCode", "ActLib", "EquActivitePraticable", "EquActivitePratique", "EquActiviteSalleSpe" ])
