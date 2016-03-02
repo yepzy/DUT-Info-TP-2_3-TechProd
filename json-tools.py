@@ -45,6 +45,7 @@ def createTable(dbFile, className, argDB, typesDB):
 def convertOuiNonBool(data):
     if(data == "Oui"):
         return True
+    if(data == "")
     else:
         return False
 

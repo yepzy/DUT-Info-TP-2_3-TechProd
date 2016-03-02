@@ -7,13 +7,6 @@ import json
 
 
 def readCSV(filepath, tablename, columns):
-    # with open('CSV/activités.csv') as csvfile:
-    # 	reader = csv.DictReader(csvfile)
-    # 	cpt = 0
-    # 	for row in reader:
-    # 		cpt = cpt + 1
-    # 		print(str(cpt)+" | "+row['EquipementId']+" "+row['ActLib'])
-    # 		writeTableActivites(row['EquipementId'],row['ActLib'])
     with open(filepath) as csvfile:
         reader = csv.DictReader(csvfile)
         cpt = 0
@@ -25,16 +18,26 @@ def readCSV(filepath, tablename, columns):
                 values.append('\''+row[column]+'\'')
             allvalues.append(values)
             #print(str(cpt) + str(values))
-        writeTable(tablename, allvalues)
+        writeTable(filepath, tablename, allvalues)
 
-def readJSON(filepath):
-    with open(filepath) as data_file:
-        data = json.load(data_file)
+def readJSON(filepath, tablename, columns):
+    with open(filepath, encoding="utf-8") as data_file:
+        data = json.loads(data_file.read())
+        cpt = 0
+        allvalues = []
         for row in data:
-            print(row)
+            values = []
+            cpt = cpt + 1
+            for column in columns:
+                if(isinstance(convertOuiNonBool(row[column]), str)):
+                    values.append('\''+row[column]+'\'')
+                else:
+                    values.append(convertOuiNonBool(row[column]))
+            allvalues.append(values)
+        writeTable(filepath, tablename, allvalues)
 
-def createTable(tablename, attributes):
-    conn = sqlite3.connect('DB/data.db')
+def createTable(filepath, tablename, attributes):
+    conn = sqlite3.connect(filepath)
     c = conn.cursor()
     if not c.execute('SELECT * FROM '+tablename):
         c.execute('CREATE TABLE '+tablename+' ('+attributes+')')
@@ -43,8 +46,8 @@ def createTable(tablename, attributes):
     # Fermer le curseur
     c.close()
 
-def writeTable(tablename, values):
-    conn = sqlite3.connect('DB/data.db')
+def writeTable(filepath, tablename, values):
+    conn = sqlite3.connect(filepath)
     c = conn.cursor()
     try:
         c.execute('SELECT * FROM '+tablename)
@@ -61,4 +64,12 @@ def writeTable(tablename, values):
     # Fermer le curseur
     c.close()
 
-readCSV("CSV/equipements.csv", "equipements", {'EquipementId', 'EquNom'})
+def convertOuiNonBool(data):
+    if(data == "Oui"):
+        return True
+    if(data == "Non"):
+        return False
+    return data
+
+#readCSV("CSV/equipements.csv", "equipements", {'EquipementId', 'EquNom'})
+readJSON("JSON/installations.json", "installations", {'EquipementId', 'EquActiviteSalleSpe', 'EquActivitePratique', 'EquActivitePraticable', 'ComLib', 'ActCode', 'ActNivLib', 'ComInsee', 'ActLib', 'EquNbEquIdentique'})
