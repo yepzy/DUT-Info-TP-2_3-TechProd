@@ -78,17 +78,44 @@ def convertOuiNonBool(data):
 #readCSV("CSV/equipements.csv", "equipements", {'EquipementId', 'EquNom'})
 createTable("DB/data.db", "installations",
     {
-    'EquipementId NUMBER',
-    'EquActiviteSalleSpe NUMBER',
-    'EquActivitePratique NUMBER',
-    'EquActivitePraticable NUMBER',
-    'ComLib TEXT',
-    'ActCode NUMBER',
-    'ActNivLib TEXT',
-    'ComInsee NUMBER',
-    'ActLib TEXT',
-    'EquNbEquIdentique NUMBER'
+		"InsLieuDit TEXT",
+		"Latitude REAL",
+        "Longitude REAL",
+		"geo BLOB",
+		"InsNumeroInstall NUMBER",
+		"InsCodePostal NUMBER",
+		"ComLib TEXT",
+		"InsLibelleVoie TEXT"		
     })
-    
+
+createTable("DB/data.db","activites",
+    {
+    "ComInsee NUMBER",
+    "ComLib TEXT",
+    "EquipementId NUMBER",
+    "EquNbEquIdentique NUMBER",
+    "ActCode NUMBER",
+    "ActLib TEXT",
+    "EquActivitePraticable NUMBER",
+    "EquActivitePratique NUMBER",
+    "EquActiviteSalleSpe NUMBER",
+    "ActNivLib TEXT"
+    })
+
+createTable("DB/data.db","equipements",
+{
+    "InsNumeroInstall NUMBER",
+    "EquipementId NUMBER",
+    "EquNom TEXT",
+    "EquNomBatiment TEXT",
+    "EquipementTypeLib TEXT",
+    "EquipementFiche TEXT",
+    "FamilleFicheLib TEXT",
+    "EquGpsX NUMBER",
+    "EquGpsY NUMBER",
+    "EquDateMa TEXT"
+})
+
 
 readJSON("JSON/installations.json", "installations", {'EquipementId', 'EquActiviteSalleSpe', 'EquActivitePratique', 'EquActivitePraticable', 'ComLib', 'ActCode', 'ActNivLib', 'ComInsee', 'ActLib', 'EquNbEquIdentique'})
+readCSV('CSV/equipements.csv')
