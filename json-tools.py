@@ -50,4 +50,5 @@ def convertOuiNonBool(data):
         return False
 
 
-readJSON('installations.json', 'data.db', 'Installation',['EquipementId', "EquActiviteSalleSpe", "EquActivitePratique", "EquActivitePraticable", "ComLib", "ActCode", "ActNivLib", "ComInsee", "ActLib", "EquNbEquIdentique"], ['NUMBER', 'NUMBER', 'NUMBER', 'NUMBER', 'TEXT', 'NUMBER', 'TEXT', 'NUMBER', 'TEXT', 'NUMBER'])
+readJSON('installations.json', 'data.db', 'Installation', ['EquipementId', "EquActiviteSalleSpe", "EquActivitePratique", "EquActivitePraticable", "ComLib",
+                                                           "ActCode", "ActNivLib", "ComInsee", "ActLib", "EquNbEquIdentique"], ['NUMBER', 'NUMBER', 'NUMBER', 'NUMBER', 'TEXT', 'NUMBER', 'TEXT', 'NUMBER', 'TEXT', 'NUMBER'])
