@@ -12,7 +12,7 @@ def readCSV(filepath, tablename, columns):
         cpt = 0
         allvalues = []
         for row in reader:
-            values = []
+            values = [cpt]
             cpt = cpt + 1
             for column in columns:
                 values.append('\''+row[column]+'\'')
@@ -27,7 +27,7 @@ def readJSON(filepath, tablename, columns):
         cpt = 0
         allvalues = []
         for row in data:
-            values = []
+            values = [cpt]
             cpt = cpt + 1
             for column in columns:
                 if(isinstance(convertOuiNonBool(row[column]), str)):
@@ -40,12 +40,14 @@ def readJSON(filepath, tablename, columns):
 def createTable(filepath, tablename, attributes):
     conn = sqlite3.connect(filepath)
     c = conn.cursor()
+    s = 'CREATE TABLE '+tablename+' ('+','.join([str(x) for x in attributes])+');'
     try:
         c.execute('DROP TABLE '+tablename+';')
-        c.execute('CREATE TABLE '+tablename+' ('+','.join([str(x) for x in attributes])+');')
+        c.execute(s)
     except sqlite3.Error as e:
-        c.execute('CREATE TABLE '+tablename+' ('+','.join([str(x) for x in attributes])+');')
+        c.execute(s)
     # Sauvegarder les modifications
+    print(s)
     conn.commit()
     # Fermer le curseur
     c.close()
@@ -67,13 +69,6 @@ def writeTable(filepath, tablename, values):
     conn.commit()
     # Fermer le curseur
     c.close()
-
-def convertOuiNonBool(data):
-    if(data == "Oui"):
-        return True
-    if(data == "Non"):
-        return False
-    return data
 
 #readCSV("CSV/equipements.csv", "equipements", {'EquipementId', 'EquNom'})
 createTable("DB/data.db", "installations",
