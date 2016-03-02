@@ -41,7 +41,8 @@ def createTable(filepath, tablename, attributes):
     conn = sqlite3.connect(filepath)
     c = conn.cursor()
     try:
-        c.execute('SELECT * FROM '+tablename+';')
+        c.execute('DROP TABLE '+tablename+';')
+        c.execute('CREATE TABLE '+tablename+' ('+','.join([str(x) for x in attributes])+');')
     except sqlite3.Error as e:
         c.execute('CREATE TABLE '+tablename+' ('+','.join([str(x) for x in attributes])+');')
     # Sauvegarder les modifications
@@ -75,5 +76,19 @@ def convertOuiNonBool(data):
     return data
 
 #readCSV("CSV/equipements.csv", "equipements", {'EquipementId', 'EquNom'})
-createTable("DB/data.db", "installations", {'EquipementId NUMBER primary key', 'EquActiviteSalleSpe NUMBER', 'EquActivitePratique NUMBER', 'EquActivitePraticable NUMBER', 'ComLib TEXT', 'ActCode NUMBER', 'ActNivLib TEXT', 'ComInsee NUMBER', 'ActLib TEXT', 'EquNbEquIdentique NUMBER'})
+createTable("DB/data.db", "installations",
+    {
+    'EquipementId NUMBER',
+    'EquActiviteSalleSpe NUMBER',
+    'EquActivitePratique NUMBER',
+    'EquActivitePraticable NUMBER',
+    'ComLib TEXT',
+    'ActCode NUMBER',
+    'ActNivLib TEXT',
+    'ComInsee NUMBER',
+    'ActLib TEXT',
+    'EquNbEquIdentique NUMBER'
+    })
+    
+
 readJSON("JSON/installations.json", "installations", {'EquipementId', 'EquActiviteSalleSpe', 'EquActivitePratique', 'EquActivitePraticable', 'ComLib', 'ActCode', 'ActNivLib', 'ComInsee', 'ActLib', 'EquNbEquIdentique'})
