@@ -17,8 +17,8 @@ def readCSV(dbfilepath,filepath, tablename, columns):
 			cpt = cpt + 1
 			for column in columns:
 				values.append('\''+row[column]+'\'')
-				allvalues.append(values)
-			writeTable(dbfilepath, tablename, allvalues)
+			allvalues.append(values)
+		writeTable(dbfilepath, tablename, allvalues)
 
 def readJSON(dbfilepath,filepath, tablename, columns):
 	with open(filepath) as data_file:
