@@ -1,22 +1,22 @@
 import sqlite3
 import csv
 import json
-import Test
+#import Test
 # Récupérer les fichiers activité.csv, equipement.csv et installation.json
 # et les mettres dans la base de données
 
 
-def importData():
+def importData(dbfilepath):
 	 """ lance les fonctions vouluent """
 	# Création des Tables
-	createTable("DB/data.db", "installations", ["id NUMBER PRIMARY KEY", "InsLieuDit TEXT",  "Latitude REAL", "Longitude REAL", "geo TEXT", "InsNumeroInstall NUMBER",  "InsCodePostal NUMBER", "ComLib TEXT",  "InsLibelleVoie TEXT"])
-	createTable("DB/data.db", "activites",     ["id NUMBER PRIMARY KEY", "EquipementId NUMBER", "ActCode NUMBER", "ActLib TEXT", "EquActivitePraticable NUMBER", "EquActivitePratique NUMBER", "EquActiviteSalleSpe NUMBER"])
-	createTable("DB/data.db", "equipements",   ["id NUMBER PRIMARY KEY", "InsNumeroInstall NUMBER", "EquipementId NUMBER", "EquNom TEXT", "EquNomBatiment TEXT", "EquipementTypeLib TEXT", "EquipementFiche TEXT", "FamilleFicheLib TEXT", "EquGpsX REAL", "EquGpsY REAL", "EquDateMaj TEXT"])
+	createTable(dbfilepath, "installations", ["id NUMBER PRIMARY KEY", "InsLieuDit TEXT",  "Latitude REAL", "Longitude REAL", "geo TEXT", "InsNumeroInstall NUMBER",  "InsCodePostal NUMBER", "ComLib TEXT", "InsLibelleVoie TEXT"])
+	createTable(dbfilepath, "activites", ["id NUMBER PRIMARY KEY", "EquipementId NUMBER", "ActCode NUMBER", "ActLib TEXT", "EquActivitePraticable NUMBER", "EquActivitePratique NUMBER", "EquActiviteSalleSpe NUMBER"])
+	createTable(dbfilepath, "equipements", ["id NUMBER PRIMARY KEY", "InsNumeroInstall NUMBER", "EquipementId NUMBER", "EquNom TEXT", "EquNomBatiment TEXT", "EquipementTypeLib TEXT", "EquipementFiche TEXT", "FamilleFicheLib TEXT", "EquGpsX REAL", "EquGpsY REAL", "EquDateMaj TEXT"])
 
 	# Lecture des CSV et du JSON, puis ecriture dans la DB
-	readJSON("DB/data.db", "JSON/installations.json", "installations", ["InsLieuDit",  "Latitude", "Longitude",  "geo", "InsNumeroInstall",  "InsCodePostal", "ComLib",  "InsLibelleVoie"])
-	readCSV("DB/data.db", 'CSV/equipements.csv', "equipements", ["InsNumeroInstall", "EquipementId", "EquNom", "EquNomBatiment", "EquipementTypeLib", "EquipementFiche", "FamilleFicheLib", "EquGpsX", "EquGpsY", "EquDateMaj"])
-	readCSV("DB/data.db", 'CSV/activités.csv', 'activites', ["EquipementId", "ActCode", "ActLib", "EquActivitePraticable", "EquActivitePratique", "EquActiviteSalleSpe"])
+	readJSON(dbfilepath, "JSON/installations.json", "installations", ["InsLieuDit",  "Latitude", "Longitude",  "geo", "InsNumeroInstall",  "InsCodePostal", "ComLib",  "InsLibelleVoie"])
+	readCSV(dbfilepath, 'CSV/equipements.csv', "equipements", ["InsNumeroInstall", "EquipementId", "EquNom", "EquNomBatiment", "EquipementTypeLib", "EquipementFiche", "FamilleFicheLib", "EquGpsX", "EquGpsY", "EquDateMaj"])
+	readCSV(dbfilepath, 'CSV/activités.csv', 'activites', ["EquipementId", "ActCode", "ActLib", "EquActivitePraticable", "EquActivitePratique", "EquActiviteSalleSpe"])
 
 
 def readCSV(dbfilepath, filepath, tablename, columns):
