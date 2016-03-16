@@ -15,6 +15,7 @@
 <head>
 	<meta charset="utf-8" />
 	<link rel="stylesheet" type="text/css" href="style/bdd.css" media="screen" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 	<script type="text/javascript" src="script/bdd.js"></script>
 </head>
 
@@ -29,6 +30,34 @@
 	</select><br/>
 
 	<span id="toggable">
+		<span id="installations">
+			<label for="geo">localisation</label>
+			<input id="geo" type="text" name="geo" value=""/><br/>
+			<label for="InsCodePostal">code postal</label>
+			<input id="InsCodePostal" type="number" name="InsCodePostal" value=""/><br/>
+		</span>
+
+		<span id="activites">
+			<label for="ActLib">nom de l\'activit&eacute</label>
+			<input id="ActLib" type="text" name="ActLib" value=""/><br/>
+			<label for="EqActivitePratiquable">inclure les activit&eacutes pour lesquelles il ne reste plus de place</label>
+			<input id="EqActivitePratiquable" type="checkbox" value="EqActivitePratiquable"/><br/>
+			<label for="EqActivitePratique">exclure les activit&eacutes auxquelles personne ne participe</label>
+			<input id="EqActivitePratique" type="checkbox" value="EqActivitePratique"/><br/>
+			<label for="EqActiviteSalleSpe">exclure les activit&eacutes requérant une salle sp&eacutecialis&eacute</label>
+			<input id="EqActiviteSalleSpe" type="checkbox" value="EqActiviteSalleSpe"/><br/>
+		</span>
+
+		<span id="equipements">
+			<label for="EqNom">nom de l\'&eacutequipement</label>
+			<input id="EqNom" type="text" name="EqNom" value=""/><br/>
+			<label for="EquipementTypeLib">type d\'&eacutequipement</label>
+			<input id="EquipementTypeLib" type="number" name="EquipementTypeLib" value=""/><br/>
+			<label for="nature">nature</label>
+			<input id="nature" name="EquipementFiche" type="radio" value="nature"/><br/>
+			<label for="generique">g&eacutenerique</label>
+			<input id="generique" name="EquipementFiche" type="radio" value="generique"/><br/>
+		</span>
 	</span>
 
   <label for="recherche">Rechercher</label>
@@ -44,14 +73,14 @@
 		</thead>
 		<tbody>
 
-			<?
+			<!--?
 			foreach ($result as $adherent){
 				echo "<tr>";
 				echo "<td>".$adherent['nom']."</td>";
 				echo "<td>".$adherent['message']."</td>";
 				echo "</tr>";
 			}
-			?>
+			?-->
 
 		</tbody>
   </table>

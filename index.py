@@ -1,5 +1,12 @@
-from libs.bottle import route, template, run
+from REST.libs.bottle import route, template, run
 
+@route('/index')
+def index():
+    return ''
+
+run(host='localhost', port=8080, debug=True)
+
+"""
 <?php
 	try{
 		$connexion = new PDO('mysql:host=localhost;charset=UTF8;dbname=E145773Z','E145773Z','E145773Z');
@@ -58,3 +65,4 @@ from libs.bottle import route, template, run
 		</tbody>
   </table>
 </body>
+"""
