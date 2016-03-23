@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<head>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" type="text/css" href="static/style/bdd.css" media="screen" />
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+		<script type="text/javascript" src="static/script/bdd.js"></script>
+	</head>
+	<body>
+		<div class="container">
+			<div class="row">
+					<h1 class="page-header"> Recherche d\'équipements sportifs </h1>
+				<div class="col-md-6">
+					<label for="type">type de recherche</label>
+					<select id="type" name="type">
+						<option value="installations">Installations</option>
+						<option value="activites">Activit&eacutes</option>
+						<option value="equipements">&Eacutequipements</option>
+					</select>
+					<br/>
+					<span id="toggable">
+						<span id="installations">
+							<label for="geo">localisation</label>
+							<input id="geo" type="text" name="geo" value=""/>
+							<br/>
+							<label for="InsCodePostal">code postal</label>
+							<input id="InsCodePostal" type="number" name="InsCodePostal" value=""/>
+							<br/>
+						</span>
+						<span id="activites">
+							<label for="ActLib">nom de l\'activit&eacute</label>
+							<input id="ActLib" type="text" name="ActLib" value=""/>
+							<br/>
+							<label for="EqActivitePratiquable">inclure les activit&eacutes pour lesquelles il ne reste plus de place</label>
+							<input id="EqActivitePratiquable" type="checkbox" value="EqActivitePratiquable"/>
+							<br/>
+							<label for="EqActivitePratique">exclure les activit&eacutes auxquelles personne ne participe</label>
+							<input id="EqActivitePratique" type="checkbox" value="EqActivitePratique"/>
+							<br/>
+							<label for="EqActiviteSalleSpe">exclure les activit&eacutes requérant une salle sp&eacutecialis&eacute</label>
+							<input id="EqActiviteSalleSpe" type="checkbox" value="EqActiviteSalleSpe"/>
+							<br/>
+						</span>
+						<span id="equipements">
+							<label for="EqNom">nom de l\'&eacutequipement</label>
+							<input id="EqNom" type="text" name="EqNom" value=""/>
+							<br/>
+							<label for="EquipementTypeLib">type d\'&eacutequipement</label>
+							<input id="EquipementTypeLib" type="number" name="EquipementTypeLib" value=""/>
+							<br/>
+							<label for="nature">nature</label>
+							<input id="nature" name="EquipementFiche" type="radio" value="nature"/>
+							<br/>
+							<label for="generique">g&eacutenerique</label>
+							<input id="generique" name="EquipementFiche" type="radio" value="generique"/>
+							<br/>
+						</span>
+					</span>
+					<label for="recherche">Rechercher</label>
+					<input id="recherche" type="text" name="recherche"value=""/>
+				</div>
+				<div class="col-md-6">
+					<table class="table">
+						<thead>
+							<tr>
+								<td colspan="4" class="unite"> installations sportives </td>
+							</tr>
+							<tr>
+								<th class="etendue-colonne" id="YC32">Nom</th>
+								<th class="etendue-colonne" id="YC33">Commentaire</th>
+							</tr>
+						</thead>
+						<tbody> </tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</body>

@@ -11,5 +11,4 @@ $(document).ready(function(){
     $("span[id=toggable] > span").hide();
     $("span[id="+s+"]").show();
   });
-
 });
