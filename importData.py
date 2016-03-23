@@ -7,7 +7,7 @@ import json
 
 
 def importData(dbfilepath):
-	 """ lance les fonctions vouluent """
+	""" lance les fonctions vouluent """
 	# Création des Tables
 	createTable(dbfilepath, "installations", ["id NUMBER PRIMARY KEY", "InsLieuDit TEXT",  "Latitude REAL", "Longitude REAL", "geo TEXT", "InsNumeroInstall NUMBER",  "InsCodePostal NUMBER", "ComLib TEXT", "InsLibelleVoie TEXT"])
 	createTable(dbfilepath, "activites", ["id NUMBER PRIMARY KEY", "EquipementId NUMBER", "ActCode NUMBER", "ActLib TEXT", "EquActivitePraticable NUMBER", "EquActivitePratique NUMBER", "EquActiviteSalleSpe NUMBER"])
@@ -29,7 +29,7 @@ def readCSV(dbfilepath, filepath, tablename, columns):
 			values = [cpt]
 			cpt = cpt + 1
 			for column in columns:
-				values.append('\'' + row[column] + '\'')
+				values.append(row[column])
 			allvalues.append(values)
 		writeTable(dbfilepath, tablename, allvalues)
 
@@ -49,7 +49,7 @@ def readJSON(dbfilepath, filepath, tablename, columns):
 					this = row[column]
 					row[column] = this['name']
 				if(isinstance(convertOuiNonBool(row[column]), str)):
-					values.append('\'' + row[column] + '\'')
+					values.append(row[column])
 				else:
 					values.append(convertOuiNonBool(row[column]))
 			allvalues.append(values)

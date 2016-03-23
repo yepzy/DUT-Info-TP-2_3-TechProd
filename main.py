@@ -1,12 +1,10 @@
-#import importData
-import bottle
-import web
+import importData
+import REST.restServeur
 
 
 def main():
-   #importData.importData('DB/data.db')
-   
-   bottle.run(host='localhost', port=8080)
+   importData.importData('DB/data.db')
+   restServeur.main()
 
 # Execution de la fonction main au lancement du script
 if __name__ == '__main__':
