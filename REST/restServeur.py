@@ -1,4 +1,4 @@
-from bottle import run,route
+from bottle.bottle import run,route
 import json
 import sqlite3
 
@@ -9,7 +9,7 @@ def installation(localisation,cp):
 	print(localisation+" "+cp)
 	conn = sqlite3.connect(dbPath)
 	c = conn.cursor()
-	res = c.execute('SELECT * FROM installations WHERE ComLib=\"'+localisation+'\" AND InsCodePostal="'+cp+'";').fetchall()
+	res = c.execute('SELECT * FROM installations WHERE ComLib=\"\''+localisation+'\'\" AND InsCodePostal="\''+cp+'\'";').fetchall()
 	print(res)
 	return json.dumps(res)
 
